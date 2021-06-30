@@ -1,6 +1,8 @@
 class User < ApplicationRecord
-    has_and_belongs_to_many :restaurants
-    has_many :tables, through: :restaurants
-    has_many :orders
+    has_many :tables
+    has_many :orders, through: :tables
     has_secure_password
+    validates :username, presence: true, uniqueness: true
+    validates :password_digest, presence: true
+    validates :email, presence: true, uniqueness: true
 end
