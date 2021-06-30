@@ -10,24 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_28_154346) do
+ActiveRecord::Schema.define(version: 2021_06_29_074024) do
 
   create_table "menuitems", force: :cascade do |t|
     t.string "name"
     t.float "price"
+    t.boolean "isdrink"
+    t.boolean "isfood"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "orders", force: :cascade do |t|
     t.float "total"
-    t.boolean "paid"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "restaurants", force: :cascade do |t|
-    t.string "name"
+    t.boolean "ispaid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -35,14 +31,24 @@ ActiveRecord::Schema.define(version: 2021_06_28_154346) do
   create_table "tables", force: :cascade do |t|
     t.string "name"
     t.integer "status"
+    t.integer "order_id"
+    t.integer "menuitem_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.string "email"
     t.string "password_digest"
+    t.integer "table_id"
+    t.integer "order_id"
+    t.boolean "ismanager"
+    t.boolean "iscook"
+    t.boolean "ishost"
+    t.boolean "iswaitstaff"
+    t.boolean "isbusser"
+    t.boolean "isbartender"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

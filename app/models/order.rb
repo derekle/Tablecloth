@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-    belongs_to :users
     belongs_to :tables
-    belongs_to :restaurants, through: :tables
+    belongs_to :users, through: :tables
+    has_many :menuitems
 end
