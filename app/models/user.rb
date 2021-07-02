@@ -9,4 +9,8 @@ class User < ApplicationRecord
     def is_unique?
         User.find_by_username(params[:username]) == nil
     end
+
+    def managerbydefault?
+        User.where("employee_type = 'manager'").empty?
+    end
 end
