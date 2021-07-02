@@ -13,4 +13,15 @@ class User < ApplicationRecord
     def managerbydefault?
         User.where("employee_type = 'manager'").empty?
     end
+    
+    def self.from_omniauth(auth)
+      where(email: auth.info.email).first_or_initialize do |user|
+        user.username = auth.info.name
+        user.email = auth.info.email
+        user.password = SecureRandom.hex
+        if managerbydefault?
+          user.employee_type = "manager"
+        end
+      end
+  end
 end
