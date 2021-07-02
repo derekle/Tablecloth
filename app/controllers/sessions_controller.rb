@@ -11,8 +11,16 @@ class SessionsController < ApplicationController
   end
 
   def create
-    session[:user_id] = User.find_by(username: params[:username]).id
+    if from_omniauth?
+      auth_hash = from_omniauth?
+      user = User.from_omniauth(auth_hash)
+      session[:user_id] = user.id
+      user.save
+      redirect_to :controller => 'users', :action => 'index'
+    else
+    session[:user_id] = User.find_by(username: params[:username], email: params[:email]).id
     redirect_to :controller => 'users', :action => 'index'
+    end
   end
 
   #logging out by destroying session
@@ -20,4 +28,10 @@ class SessionsController < ApplicationController
     session.delete :user_id
     redirect_to :controller => 'users', :action => 'index'
   end 
+
+  private
+
+  def from_omniauth?
+    request.env['omniauth.auth']
+  end
 end
