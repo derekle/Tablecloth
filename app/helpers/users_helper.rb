@@ -2,8 +2,14 @@ module UsersHelper
     def logged_in?
         !!session[:user_id]
     end
+
+    def reset
+        if User.all.empty?
+            session.destroy
+        end
+    end
     def current_user
-       # binding.pry
+        reset
         if logged_in?
             current_user = User.find(session[:user_id])
             return current_user
