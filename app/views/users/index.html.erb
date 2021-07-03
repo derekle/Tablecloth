@@ -1,6 +1,11 @@
-<% if current_user%>
-    <h6>Welcome, <%= current_user.username %>!</h6>
-    <%= link_to "logout", {:controller=> "sessions", :action=> "destroy"}, :method => :delete%>
-    <% else %>
+<% if current_user %>
+        <h3>Welcome, <%= current_user.username %>!</h3>
+        <h4><a href = "/users/<%=current_user.id%>">Account</a></h4>
+        <%if current_user.employee_type == "manager" %>
+        <h4><a href= "/add">Employees</a></h4>
+        <% end %>
+        <h4>Tables</h4>
+        <h4>Orders</h4>
+<% else %>
     <h6>Welcome! <a href= "/signup">Register</a> a new account or <a href="/login">log in!</a></h6>
 <% end %>
