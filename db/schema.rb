@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2021_06_29_074024) do
   create_table "orders", force: :cascade do |t|
     t.float "total"
     t.boolean "ispaid"
+    t.integer "table_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -31,9 +33,6 @@ ActiveRecord::Schema.define(version: 2021_06_29_074024) do
   create_table "tables", force: :cascade do |t|
     t.string "name"
     t.integer "status"
-    t.integer "order_id"
-    t.integer "menuitem_id"
-    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -42,8 +41,6 @@ ActiveRecord::Schema.define(version: 2021_06_29_074024) do
     t.string "username"
     t.string "password_digest"
     t.string "email"
-    t.integer "table_id"
-    t.integer "order_id"
     t.string "employee_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
