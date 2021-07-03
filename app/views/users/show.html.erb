@@ -1,3 +1,60 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
-<% binding.pry %>
+<p>Name: <%=current_user.username%></p>
+<p>Email: <%=current_user.email%></p>
+
+<% if current_user.errors.any? %>
+<div id="error_explanation">
+
+   <h2>
+      <%= pluralize(current_user.errors.count, "error") %>
+      prohibited this user from being saved:
+   </h2>
+
+   <ul>
+      <% current_user.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+      <% end %>
+   </ul>
+</div>
+<% end %> 
+
+<%= form_for current_user do |f| %>
+    <p>Username: <%= f.text_field :username %></p>
+    <p>Email: <%= f.email_field :email %></p>
+    <p>Password: <%= f.password_field :password %></p>
+    <p>Confirm Password: <%= f.password_field :password_confirmation %></p>
+    <%if current_user.employee_type != "manager" %>
+        <p><%= f.radio_button :employee_type, "manager", disabled: true, unchecked: true %> Manager - Only managers can grant you this role </p>
+        <p><%= f.radio_button :employee_type, "cook"%> Cook</p>
+        <p><%= f.radio_button :employee_type, "host"%> Host</p>
+        <p><%= f.radio_button :employee_type, "waitstaff"%> Waitstaff</p>
+        <p><%= f.radio_button :employee_type, "bartender" %>Bartender</p>
+        <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
+    <%else%>
+        <% if User.get_managers.size <= 1 && User.get_managers.include?(current_user) %>
+            <p>You must create at least one more Manager Account before changing your role.</p>
+            <p><%= f.radio_button :employee_type, "manager", disabled: true, checked: true %> Manager </p>
+            <p><%= f.radio_button :employee_type, "cook" , disabled: true %> Cook</p>
+            <p><%= f.radio_button :employee_type, "host", disabled: true%> Host</p>
+            <p><%= f.radio_button :employee_type, "waitstaff", disabled: true%> Waitstaff</p>
+            <p><%= f.radio_button :employee_type, "bartender", disabled: true %>Bartender</p>
+            <p><%= f.radio_button :employee_type, "busser", disabled: true%>Busser</p>
+        <%else%>
+            <p><%= f.radio_button :employee_type, "manager"%> Manager</p>    
+            <p><%= f.radio_button :employee_type, "cook"%> Cook</p>
+            <p><%= f.radio_button :employee_type, "host"%> Host</p>
+            <p><%= f.radio_button :employee_type, "waitstaff"%> Waitstaff</p>
+            <p><%= f.radio_button :employee_type, "bartender" %>Bartender</p>
+            <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
+        <%end%>
+    <%end%>
+    <%= f.submit %>
+<% end %> 
+
+
+
+
+<p>Tables:</p>
+<%current_user.tables.each do |x|%>
+    <p><%=x.name %></p>
+<% end %>
+
