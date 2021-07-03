@@ -2,7 +2,13 @@
 <html>
   <head>
     <title>Project3</title>
-    <br><h1><a href= "/">Home</a></h1></br>
+    <br>
+      <h1><a href= "/">Home</a>
+        <%if current_user %>
+          <%= button_to "Logout", {controller: "sessions", action: "destroy"}, :method => :delete%>
+        <%end%>
+      </h1>
+    </br>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,6 +16,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
 
   <body>
     <%= yield %>
