@@ -8,6 +8,15 @@ module UsersHelper
             session.destroy
         end
     end
+
+    def edit_user(userid)
+        if logged_in?
+            edit_user = User.find(userid)
+            return edit_user
+        else
+            return false
+        end
+    end
     def current_user
         reset
         if logged_in?
