@@ -4,14 +4,14 @@ module UsersHelper
     end
 
     def reset
-        if User.all.empty?
+        if !User.find_by_id(session[:user_id])
             session.destroy
         end
     end
 
     def edit_user(userid)
         if logged_in?
-            edit_user = User.find(userid)
+            edit_user = User.find_by_id(userid)
             return edit_user
         else
             return false
@@ -20,10 +20,8 @@ module UsersHelper
     def current_user
         reset
         if logged_in?
-            current_user = User.find(session[:user_id])
+            current_user = User.find_by_id(session[:user_id])
             return current_user
-        else
-            return false
         end
     end
 end
