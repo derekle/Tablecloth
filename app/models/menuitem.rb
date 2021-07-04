@@ -1,4 +1,5 @@
 class Menuitem < ApplicationRecord
-    belongs_to :orders
-    validates :name, presence: true
+    validates :name, uniqueness: true, presence: true
+    validates :price, presence: true
+    validates :item_type, presence: true
 end
