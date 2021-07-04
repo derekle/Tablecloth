@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     end
 
     def show
+        @id = params[:id]
     end
 
     def employees
@@ -37,8 +38,6 @@ class UsersController < ApplicationController
     end
 
     def update
-        binding.pry
-
         if !user_params[:username].empty?
 			edit_user(params[:id]).update!(username:user_params[:username])
         end
@@ -51,19 +50,17 @@ class UsersController < ApplicationController
         if !user_params[:employee_type].empty?
             edit_user(params[:id]).update!(employee_type:user_params[:employee_type])
         end
-        render :index
+        redirect_to home_path
     end
 
     def destroy
     end
 
     private
-    def require_login
-        return head(:forbidden) unless session.include? :user_id
-    end
-    
     def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation, :employee_type).to_h    end
+      params.require(:user).permit(:username, :email, :password, :password_confirmation, :employee_type).to_h
+    end
+
 end
 
 
