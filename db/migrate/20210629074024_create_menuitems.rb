@@ -3,9 +3,7 @@ class CreateMenuitems < ActiveRecord::Migration[6.1]
     create_table :menuitems do |t|
       t.string :name
       t.float :price
-      t.boolean :isdrink
-      t.boolean :isfood
-
+      t.string :item_type
       t.timestamps
     end
   end
