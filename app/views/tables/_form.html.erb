@@ -1,0 +1,5 @@
+<%= form_for @table do |f| %>
+    <p>Name: <%=f.text_field :name%></p>
+    <p>Status: <%= f.select :status, options_for_select([["Ready", 1], ["Occupied", 2], ["Needs Cleaning", 3]]), :class => 'genForm_dropBox' %></p>
+    <%= f.submit%>
+<%end%>
