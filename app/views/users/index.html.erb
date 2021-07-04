@@ -1,12 +1,1 @@
-<%binding.pry%>
-<% if current_user %>
-        <h3>Welcome, <%= current_user.username %>!</h3>
-        <h4><%= link_to 'Account', user_path(current_user.id)%></h4>
-        <%if current_user.employee_type == "manager" %>
-        <h4><%= link_to 'Employees', employees_path%></h4>
-        <% end %>
-        <h4><%= link_to 'Tables', {controller: "tables", action: "index"}%></h4>
-        <h4>Orders</h4>
-<% else %>
-    <h6>Welcome! <a href= "/signup">Register</a> a new account or <a href="/login">log in!</a></h6>
-<% end %>
+<h6>Welcome! <a href= "/signup">Register</a> a new account or <a href="/login">log in!</a></h6>
