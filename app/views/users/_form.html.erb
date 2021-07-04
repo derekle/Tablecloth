@@ -1,0 +1,18 @@
+<%= form_for @user do |f| %>
+    <p>Username: <%= f.text_field :username %></p>
+    <p>Email: <%= f.email_field :email %></p>
+    <p>Password: <%= f.password_field :password %></p>
+    <p>Confirm Password: <%= f.password_field :password_confirmation %></p>
+    <% if User.get_managers.empty? %>
+       <p><%= f.check_box :employee_type, value: true, checked: true, disabled: true %>Manager</p>
+       <%= f.hidden_field :employee_type, value: "manager" %>
+    <% else %>
+       <p><%= f.radio_button :employee_type, "manager" %> Manager </p>
+       <p><%= f.radio_button :employee_type, "cook"%> Cook</p>
+       <p><%= f.radio_button :employee_type, "host"%> Host</p>
+       <p><%= f.radio_button :employee_type, "waitstaff"%> Waitstaff</p>
+       <p><%= f.radio_button :employee_type, "bartender" %>Bartender</p>
+       <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
+    <%end%>
+    <%= f.submit %>
+<% end %> 
