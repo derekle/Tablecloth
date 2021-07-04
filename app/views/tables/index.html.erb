@@ -1,0 +1,13 @@
+<h1>Tables#index</h1>
+<%if current_user.employee_type == "manager"%>
+    <%Table.all.each do |x|%>
+        <%=link_to 'Delete', {controller: "tables", action: "destroy", id: x.id}, method: :delete%>/<%=link_to 'Edit', {controller: "tables", action: "edit", id: x.id}, method: :get%> <%=link_to x.name, table_path(x.id)%> <%=x.status_to_string%>
+        <br></br>
+    <%end%>
+<%else%>
+    <%Table.all.each do |x|%>
+        <%=link_to x.name, table_path(x.id)%> <%=x.status_to_string%>
+        <br></br>
+    <%end%>
+<%end%>
+<%=button_to 'Create Table', {controller:"tables", action: "new"}, method: :get%>
