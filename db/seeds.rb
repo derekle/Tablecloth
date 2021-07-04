@@ -13,11 +13,11 @@ User.create!(username: "testbartender_name", password: "testbartender_pass", ema
 User.create!(username: "testcook_name", password: "testcook_pass", email: "testcook@email.com", employee_type: "cook")
 User.create!(username: "testbusser_name", password: "testbusser_pass", email: "testbusser@email.com", employee_type: "busser")
 
-Table.create!(name: "table1)", status: 2)
-Table.create!(name: "table2)", status: 2)
-Table.create!(name: "table3)", status: 3)
-Table.create!(name: "table4)", status: 1)
-Table.create!(name: "table5)", status: 2)
+Table.create!(name: "table1", status: 2)
+Table.create!(name: "table2", status: 2)
+Table.create!(name: "table3", status: 3)
+Table.create!(name: "table4", status: 1)
+Table.create!(name: "table5", status: 2)
 
 Order.create!(table_id: 1, user_id: 1, ispaid: true)
 Order.create!(table_id: 1, user_id: 3, ispaid: false)
