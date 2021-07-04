@@ -1,15 +1,13 @@
 class UsersController < ApplicationController
     before_action :require_login
     skip_before_action :require_login, only: [:index, :new, :create]
-
+    include UsersHelper
     def new
         @user = User.new
     end
 
     def index
-        if session[:id] == nil
         render :index
-        end
     end
 
     def create
@@ -17,7 +15,9 @@ class UsersController < ApplicationController
         binding.pry
         if @user.valid?
             @user.save
-            session[:user_id] = @user.id
+            if !logged_in?
+                session[:user_id] = @user.id
+            end
             redirect_to user_path(@user)
         else
             render :new
@@ -25,24 +25,31 @@ class UsersController < ApplicationController
     end 
 
     def edit
+        @id = params[:id]
     end
 
     def show
-        @user = User.find(params[:id])
+    end
+
+    def employees
+        @user = User.new
+        render :employees
     end
 
     def update
+        binding.pry
+
         if !user_params[:username].empty?
-			current_user.update(username:user_params[:username])
+			edit_user(params[:id]).update!(username:user_params[:username])
         end
         if !user_params[:password].empty?
-            current_user.update(password:user_params[:password])
+            edit_user(params[:id]).update!(password:user_params[:password])
         end
         if !user_params[:email].empty?
-            current_user.update(email:user_params[:email])
+            edit_user(params[:id]).update!(email:user_params[:email])
         end
         if !user_params[:employee_type].empty?
-            current_user.update(employee_type:user_params[:employee_type])
+            edit_user(params[:id]).update!(employee_type:user_params[:employee_type])
         end
         render :index
     end
