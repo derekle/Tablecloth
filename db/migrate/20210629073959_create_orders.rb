@@ -5,6 +5,8 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       t.boolean :ispaid
       t.references  :table
       t.references  :user
+      t.references :menuitems
+      t.integer :quantity
       t.text :menuitems
       t.timestamps
     end
