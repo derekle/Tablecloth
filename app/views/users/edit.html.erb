@@ -1,4 +1,5 @@
 <h2>Editing <%=edit_user(@id).username%>'s Account</h2>
+<%= render "errors"%>
 <%= form_for edit_user(@id) do |f| %>
     <p>Username: <%= f.text_field :username %></p>
     <p>Email: <%= f.email_field :email %></p>
