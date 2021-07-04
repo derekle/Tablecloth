@@ -1,13 +1,7 @@
 <html>
    <body>
       <div style="padding-left: 16px;">
-      
-      <% if User.first == nil %>
-         <h1>Create a Manager Account</h1>
-      <% else %>
-         <h1>Create an account!</h1>
-      <% end %>
-      <div>
+            <div>
          <% if @user.errors.any? %>
             <div id="error_explanation">
 
@@ -26,6 +20,11 @@
       </div>
       <div>
          <% if !logged_in? %>
+            <% if User.first == nil %>
+               <h1>Create a Manager Account</h1>
+            <% else %>
+               <h1>Create an account!</h1>
+            <% end %>
             <%= form_for @user do |f| %>
                   <p>Username: <%= f.text_field :username %></p>
                   <p>Email: <%= f.email_field :email %></p>
