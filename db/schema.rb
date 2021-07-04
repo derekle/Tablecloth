@@ -26,8 +26,11 @@ ActiveRecord::Schema.define(version: 2021_06_29_074024) do
     t.boolean "ispaid"
     t.integer "table_id"
     t.integer "user_id"
+    t.text "menuitems"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["table_id"], name: "index_orders_on_table_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "tables", force: :cascade do |t|
