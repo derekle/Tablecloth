@@ -1,0 +1,10 @@
+<h1>Order#edit</h1>
+
+<%Menuitem.all.each do |x|%>
+    <%= form_for @order do |f| %>
+        <%=x.name%> <%=x.price%> <%= f.number_field :quantity%> <%=f.hidden_field :menuitems_id, value: x.id%> <%=f.submit "Add"%>
+        <br></br>
+    <%end%>
+<% end %>
+
+<%=render :partial => "form" %>
