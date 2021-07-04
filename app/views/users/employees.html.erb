@@ -1,0 +1,30 @@
+<% if logged_in? %>
+        <%binding.pry%>
+        <% if User.get_needsrole.any?%>
+            <h1>Your Inactive Employees</h1>
+            <% User.get_needsrole.each do |x|%>
+                <p><%= link_to x.username, {controller: "users", action: "edit", id: x.id}, :method => :get%></p>
+            <%end%>
+        <%end%>
+        <h1>Your Active Employees</h1>
+        <% User.all.each do |x|%>
+            <% if x != current_user && !User.get_needsrole.include?(x)%>
+                <p><%= link_to x.username, {controller: "users", action: "edit", id: x.id}, :method => :get%></p>
+            <% end %>
+        <%end%>
+<br></br>
+        <h1>Create an Employee Account!</h1>
+        <%= form_for @user do |f| %>
+            <p>Username: <%= f.text_field :username %></p>
+            <p>Email: <%= f.email_field :email %></p>
+            <p>Password: <%= f.password_field :password %></p>     
+            <p>Confirm Password: <%= f.password_field :password_confirmation %></p>
+            <p><%= f.radio_button :employee_type, "manager" %> Manager </p>
+            <p><%= f.radio_button :employee_type, "cook"%> Cook</p>
+            <p><%= f.radio_button :employee_type, "host"%> Host</p>
+            <p><%= f.radio_button :employee_type, "waitstaff"%> Waitstaff</p>
+            <p><%= f.radio_button :employee_type, "bartender" %>Bartender</p>
+            <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
+            <%= f.submit %>
+        <% end %>    
+<% end %>
