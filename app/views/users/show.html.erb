@@ -2,19 +2,3 @@
 <p>Email: <%=current_user.email%></p>
 <%= button_to "Edit Account", {controller: "users", action: "edit"}, :method => :get%>
 
-<% if current_user.errors.any? %>
-<div id="error_explanation">
-
-   <h2>
-      <%= pluralize(current_user.errors.count, "error") %>
-      prohibited this user from being saved:
-   </h2>
-
-   <ul>
-      <% current_user.errors.full_messages.each do |msg| %>
-         <li><%= msg %></li>
-      <% end %>
-   </ul>
-</div>
-<% end %> 
-
