@@ -26,6 +26,9 @@ gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'dotenv-rails'
 gem 'omniauth-rails_csrf_protection'
+gem 'simple_form'
+gem 'in_columns', '~> 0.2.0'
+gem 'formtastic', '~> 4.0'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
