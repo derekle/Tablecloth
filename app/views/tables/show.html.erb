@@ -1,0 +1,38 @@
+<h1>Tables#show</h1>
+<h1><%=current_table(@id).name%></h1>
+<h1>Status: <%=current_table(@id).status_to_string%></h1>
+<%if table_user(current_table(@id)) != nil %>
+    <h2>Assigned user is: <%=table_user(current_table(@id)).username%></h2>
+<%else%>
+    <h2>There is No Assigned User</h2>
+<%end%>
+
+<% if current_table(@id).status == 1%>
+    <% if current_user.employee_type == "manager" || current_user.employee_type == "host"%>
+        <%=form_for(current_table(@id), :url => {action: "stageup", controller: "tables"}, :html => {method: "post"}) do |f|%>
+            <p>Assign waitstaff: <%= f.select :user_ids, options_for_select(current_table(@id).get_options_hash("waitstaff")), :class => 'genForm_dropBox'%></p>
+            <%= f.hidden_field :status, value: 2%>
+            <%=f.submit%>
+        <%end%>
+    <%end%>
+<% end %>
+<% if current_table(@id).status == 2 %>
+
+    <%if current_user.employee_type == "manager" || table_user(current_table(@id)) == current_user %>
+            <%current_table(@id).orders.first.menuitems.each do |x|%>
+                <p><%=x.first.name%> = (<%=x.first.price%> * <%=x.second%>)</p>
+            <%end%>
+            <h2>Total: <%=current_table(@id).orders.first.total%></h2>     
+            <%=link_to 'Edit Order', {controller: "orders", action: "edit", id: current_table(@id).orders.first.id}%>
+            <%=link_to 'Pay', {controller: "orders", action: "show", id: current_table(@id).orders.first.id}, method: "get"%>
+    <%end%>
+<%end%>
+
+<% if current_table(@id).status == 3 %>
+    <%if current_user.employee_type == "manager" || current_user.employee_type == "busser" %>
+        <%=form_for(current_table(@id), :url => {action: "stageup", controller: "tables", id: current_table(@id).id}, :html => {method: "post"}) do |f|%>
+            <%= f.hidden_field :status, value: 1%>
+            <%=f.submit "Finish"%>
+        <%end%>
+    <%end%>
+<%end%>
