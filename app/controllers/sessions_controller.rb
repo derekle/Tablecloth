@@ -18,11 +18,10 @@ class SessionsController < ApplicationController
       user.save
       
       session[:user_id] = user.id
-      redirect_to :controller => 'users', :action => 'index'
     else
       session[:user_id] = User.find_by(username: params[:username], email: params[:email]).id
-      redirect_to :controller => 'users', :action => 'index'
     end
+    redirect_to :controller => 'sessions', :action => 'show'
   end
 
   def show
