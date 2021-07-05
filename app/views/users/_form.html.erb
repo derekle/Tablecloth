@@ -7,11 +7,11 @@
        <p><%= f.check_box :employee_type, value: true, checked: true, disabled: true %>Manager</p>
        <%= f.hidden_field :employee_type, value: "manager" %>
     <% else %>
-       <p><%= f.radio_button :employee_type, "manager" %> Manager </p>
-       <p><%= f.radio_button :employee_type, "cook"%> Cook</p>
-       <p><%= f.radio_button :employee_type, "host"%> Host</p>
-       <p><%= f.radio_button :employee_type, "waitstaff"%> Waitstaff</p>
-       <p><%= f.radio_button :employee_type, "bartender" %>Bartender</p>
+       <p><%= f.radio_button :employee_type, "manager"%>Manager </p>
+       <p><%= f.radio_button :employee_type, "cook"%>Cook</p>
+       <p><%= f.radio_button :employee_type, "host"%>Host</p>
+       <p><%= f.radio_button :employee_type, "waitstaff"%>Waitstaff</p>
+       <p><%= f.radio_button :employee_type, "bartender"%>Bartender</p>
        <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
     <%end%>
     <%= f.submit %>
