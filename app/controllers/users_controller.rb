@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     before_action :require_login,  only: [:edit, :show, :employees, :update, :destroy]
-    skip_before_action :verify_authenticity_token, :only => [:index, :new, :show]
+    skip_before_action :verify_authenticity_token, :only => [:index, :new, :show, :create]
 
     include UsersHelper
     def new
