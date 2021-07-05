@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-    before_action :require_login
-    skip_before_action :require_login, only: [:index, :new, :create]
+    before_action :require_login,  only: [:edit, :show, :employees, :update, :destroy]
+    skip_before_action :verify_authenticity_token, :only => [:index, :new, :show]
+
     include UsersHelper
     def new
         @user = User.new
@@ -12,13 +13,12 @@ class UsersController < ApplicationController
 
     def create
         @user = User.new(user_params)
-        binding.pry
         if @user.valid?
             @user.save
             if !logged_in?
                 session[:user_id] = @user.id
             end
-            redirect_to user_path(@user)
+            redirect_to signin_path
         else
             render :new
         end
