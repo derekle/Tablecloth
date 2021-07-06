@@ -1,7 +1,7 @@
 <h1>Order#show</h1>
 
 <%=render :partial => "form" %>
-<%=form_for(@order, :url => {action: "pay", controller: "orders"}, :html => {method: "post"}) do |f|%>
+<%=form_for(@order, url: pay_path, :html => {method: "post"}) do |f|%>
     <%=f.number_field :quantity, min: 0.0, step: 0.01%>
     <%=f.submit "Pay"%>
 <%end%>
