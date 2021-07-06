@@ -6,19 +6,22 @@ Rails.application.routes.draw do
   resources :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  root to: "users#index"
+  root to: "sessions#show", as: 'home'
   
   resources :sessions, only: [:new, :create, :destroy]
 
-  get '/tables/:id:/edit', to: 'tables#edit'
+  get '/tables/:id:/edit', to: 'tables#edit', as: "tableedit"
   get '/signup', to: 'users#new', as: 'signup'
   get '/employees', to: 'users#employees', as: 'employees'
   post '/signup', to: 'users#create'
-  get '/login', to: 'sessions#new', as: 'signin'
+  delete '/users/:id(.:format)', to: 'users#destroy', as: 'deleteuser'
+  get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
+  delete '/logout', to: 'sessions#destroy', as:'logout'
   get 'auth/google_oauth2/callback', to: 'sessions#create'
   post '/tables/:id(.:format)', to: 'tables#stageup', as: 'stageup'
-  post '/orders/:id(.:format)', to: 'orders#pay#', as: 'pay'
-  get '/home', to: 'sessions#show', as: 'home'
+  get 'tables/:id/orders/:id(.:format)', to: 'orders#edit#', as: 'tableorder'
+  post 'tables/:id/orders/:id(.:format)', to: 'orders#pay#', as: 'pay'
+  patch 'tables/:id/orders/:id(.:format)', to: 'orders#update#', as: 'updateorder'
+  delete '/tables/:id(.:format)', to: 'tables#destroy', as:'deletetable'
 end
