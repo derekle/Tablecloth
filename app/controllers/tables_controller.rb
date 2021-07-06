@@ -1,6 +1,6 @@
 class TablesController < ApplicationController
     before_action :require_login
-    before_action :require_admin, only:[:new, :create, :update, :edit,:destroy]
+    before_action :require_admin, only:[:new, :create, :update,:destroy]
     include TablesHelper
     def new
         @table = Table.new
@@ -12,7 +12,6 @@ class TablesController < ApplicationController
 
     def create
         @table = Table.new(table_params)
-        binding.pry
         if @table.valid?
             @table.save
             render :index
@@ -22,7 +21,7 @@ class TablesController < ApplicationController
     end
 
     def edit
-        @table = edit_table(params[:id])
+        @table = get_table
     end
 
     def show
@@ -30,19 +29,22 @@ class TablesController < ApplicationController
     end
 
     def update
-        binding.pry
-        edit_table(params[:id]).update!(table_params)
-        if table_params[:status].to_i == 1
-            edit_table(params[:id]).orders.first.destroy
-        end
+        get_table.update!(table_params)
+
         render :index
     end
 
     def stageup
+        if table_params[:status].to_i == 1
+            get_table.orders.last.destroy
+        end
         if table_params[:status] == 2
             Order.create!(table_id:params[:id], user_id:table_params[:user_ids])
         end
-        edit_table(params[:id]).update!(table_params)
+        if table_params[:status] == 3
+            get_table.orders.where("ispaid = false").first.ispaid = true
+        end
+        get_table.update!(table_params)
         set_id
         render :show
     end
@@ -56,6 +58,9 @@ class TablesController < ApplicationController
 
     private
 
+    def get_table
+        edit_table(params[:id])
+    end
 
     def table_params
         params.require(:table).permit(:name, :status, :user_ids)
