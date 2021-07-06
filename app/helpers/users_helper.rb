@@ -9,9 +9,9 @@ module UsersHelper
         end
     end
 
-    def edit_user(userid)
+    def edit_user(id = @id)
         if logged_in?
-            edit_user = User.find_by_id(userid)
+            edit_user = User.find_by_id(id)
             return edit_user
         else
             return false
