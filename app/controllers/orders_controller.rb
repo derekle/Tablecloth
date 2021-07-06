@@ -9,7 +9,8 @@ class OrdersController < ApplicationController
         quantity = order_params[:quantity].to_i
         get_order.calculate(menuitem, quantity)
         get_order.track(menuitem, quantity)
-        render :edit
+        @id = get_order.table.id
+        render 'tables/show'
     end
 
     def show
@@ -18,15 +19,15 @@ class OrdersController < ApplicationController
     end
 
     def pay
-        
         @tendered = order_params[:quantity].to_f
+        @total = get_order.total
+        @amountdue = get_order.pay(@tendered)
         @change = get_order.change(@tendered)
-        @total = get_order.pay(@tendered)
 
-        if get_order.ispaid == true
-            @total = 0
-        end
-        render :show
+        @id = get_order.table.id
+
+
+        render 'tables/show'
     end
 
     private
@@ -35,6 +36,7 @@ class OrdersController < ApplicationController
     end
 
     def get_order
-        @order = Order.find_by_id(params[:id])
+        @order = Order.where("table_id = #{params[:id]}").last
+        return @order
     end
 end
