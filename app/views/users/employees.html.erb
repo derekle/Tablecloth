@@ -1,18 +1,121 @@
-<% if logged_in? %>
-        <%binding.pry%>
-        <% if User.get_needsrole.any?%>
-            <h1>Your Inactive Employees</h1>
-            <% User.get_needsrole.each do |x|%>
-                <p><%= link_to x.username, {controller: "users", action: "edit", id: x.id}, :method => :get%></p>
-            <%end%>
-        <%end%>
-        <h1>Your Active Employees</h1>
-        <% User.all.each do |x|%>
-            <% if x != current_user && !User.get_needsrole.include?(x)%>
-                <p><%= link_to x.username, {controller: "users", action: "edit", id: x.id}, :method => :get%></p>
-            <% end %>
-        <%end%>
-<br></br>
-        <h1>Create an Employee Account!</h1>
-        <%= render partial: "form"%>
-<% end %>
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+.container {
+  margin: auto;
+  height: 350px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  border: 3px solid green;
+  background: #f5f5f5;
+  box-shadow: 5px 5px 5px #c7c7c7;
+  padding-top: 35px;
+  padding-bottom: 35px;
+
+}
+
+.buttons {
+    width: 200px;
+    margin: 0 auto;
+    display: inline;
+}
+    
+.action_btn {
+    width: 200px;
+    margin: 0 auto;
+    display: inline;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.list {
+    margin: auto;
+    border-radius: 2px;
+    width: 25%;
+    left: 50%;
+    text-align: center;
+    padding: 1%;
+    border: 1px solid black;
+    background: #f5f5f5;
+    box-shadow: 5px 5px 5px #c7c7c7;
+}
+.deletebutton {
+
+  background-color: #ff2424;
+  border: none;
+  color: white;
+    padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.deletebutton:hover, .deletebutton:focus {
+    background-color: #d60000;
+}
+
+.things-in-a-line{
+  display: flex;
+  flex-direction: row;
+  vertical-align:middle
+  
+}
+
+.editbutton {
+  background-color: #ebebeb;
+  border: none;
+  color: black;
+    padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 8px;
+  font-size: 16px;
+}
+.editbutton:hover, .editbutton:focus {
+    background-color: #d1d1d1;
+}
+</style>
+
+
+<% if User.get_needsrole.any?%>
+    <h1>Your Inactive Employees</h1>
+    <% User.get_needsrole.each do |x|%>
+        <p><%= link_to x.username, {controller: "users", action: "edit", id: x.id}, :method => :get%></p>
+    <%end%>
+<%end%>
+<h2>Your Active Employees</h2>
+<% User.all.each do |x|%>
+    <% if x != current_user && !User.get_needsrole.include?(x)%>
+        <div class="things-in-a-line">            
+            <%= button_to 'x', deleteuser_path(x.id), {method: "delete", class: "deletebutton"}%> 
+
+            <p>&nbsp;</p>
+            <%= button_to x.username, {controller: "users", action: "edit", id: x.id}, {method: "get", class: "editbutton"}%>
+        </div>
+    <% end %>
+<%end%>
+
+
+<details>
+    <summary>Create Employee</summary>
+    <div class="container">
+        <div class="center">
+            <p style="font-size:30px"><strong>Create an Employee Account!</p>
+            <%= render partial: "form", locals: {user: @user}%>
+        </div>
+    </div>
+</details>
+
+
