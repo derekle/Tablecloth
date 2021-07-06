@@ -1,16 +1,51 @@
+<!DOCTYPE html>
 <html>
-   <body>
-      <div style="padding-left: 16px;">
-      
-        <h1>Log in</h1>
+<head>
 
-        <form method='post'>
-            <p><input name='username' placeholder='username'></p>
-            <p><input name='email' type='email' placeholder='email'></p>
-            <p><input name='password' type='password' placeholder='password'></p>
-            <input type='submit' value='login'>
-        </form> 
+<style>
+.container {
+  margin: auto;
+  height: 350px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  border: 3px solid green;
+  background: #f5f5f5;
+  box-shadow: 5px 5px 5px #c7c7c7;
+  padding-top: 35px;
+  padding-bottom: 35px;
 
-        <%= link_to('Log in with Google!', '/auth/google_oauth2', method: 'post') %> 
-   </body>
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="center">
+
+         <p style="font-size:30px"><strong>Welcome!</strong></p>
+
+            <form method='post', action="/login">
+                <input name='username' placeholder='username'>
+                <input name='email' type='email' placeholder='email'>
+                <input name='password' type='password' placeholder='password'>
+                <input type='submit' value='Log In'>
+            </form> 
+            <hr size="1" noshade>
+
+            <%= button_to('Log in with Google!', '/auth/google_oauth2') %>
+            <%= button_to('Register a New Account', signup_path, method: 'get') %>
+        </div>
+    </div>
+
+</body>
 </html>
