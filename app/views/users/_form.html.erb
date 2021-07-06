@@ -1,18 +1,16 @@
-<%= form_for @user do |f| %>
-    <p>Username: <%= f.text_field :username %></p>
-    <p>Email: <%= f.email_field :email %></p>
-    <p>Password: <%= f.password_field :password %></p>
-    <p>Confirm Password: <%= f.password_field :password_confirmation %></p>
-    <% if User.get_managers.empty? %>
-       <p><%= f.check_box :employee_type, value: true, checked: true, disabled: true %>Manager</p>
-       <%= f.hidden_field :employee_type, value: "manager" %>
-    <% else %>
-       <p><%= f.radio_button :employee_type, "manager"%>Manager </p>
-       <p><%= f.radio_button :employee_type, "cook"%>Cook</p>
-       <p><%= f.radio_button :employee_type, "host"%>Host</p>
-       <p><%= f.radio_button :employee_type, "waitstaff"%>Waitstaff</p>
-       <p><%= f.radio_button :employee_type, "bartender"%>Bartender</p>
-       <p><%= f.radio_button :employee_type, "busser"%>Busser</p>
-    <%end%>
+<%= form_for user do |f| %>
+    <%= f.text_field :username, placeholder: 'username' %>
+    <%= f.email_field :email, placeholder: 'email' %>
+    <%= f.password_field :password, placeholder: 'password' %>
+    <%= f.password_field :password_confirmation, placeholder: 'confirm password' %>
+      <% if User.get_managers.empty? %>
+         <%= f.select :employee_type, options_for_select([["Manager","manager"],["Cook","cook"],["Host","host"],["Waitstaff","waitstaff"],["Bartender","bartender"],["Busser","busser"]]), {:class => 'genForm_dropBox'}, disabled: true%>
+         <%= f.hidden_field :employee_type, value: "manager" %>
+      <% elsif user.employee_type != "manager"%>
+         <%= f.select :employee_type, options_for_select([["Manager","manager"],["Cook","cook"],["Host","host"],["Waitstaff","waitstaff"],["Bartender","bartender"],["Busser","busser"]], disabled: "manager"), {:class => 'genForm_dropBox'}%>
+      <%else%>
+            <%= f.select :employee_type, options_for_select([["Manager","manager"],["Cook","cook"],["Host","host"],["Waitstaff","waitstaff"],["Bartender","bartender"],["Busser","busser"]]), {:class => 'genForm_dropBox'}%>
+      <%end%>
+      <hr size="1" noshade>
     <%= f.submit %>
 <% end %> 
