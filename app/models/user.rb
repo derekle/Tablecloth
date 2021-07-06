@@ -27,5 +27,11 @@ class User < ApplicationRecord
           user.employee_type = "needs role"
         end
       end
-  end
+    end
+
+    def get_errors
+      self.errors.full_messages.each do |msg|
+        msg
+      end
+    end
 end
