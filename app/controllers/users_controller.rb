@@ -18,9 +18,19 @@ class UsersController < ApplicationController
             if !logged_in?
                 session[:user_id] = @user.id
             end
-            redirect_to signin_path
+            flash[:notice] = ["User successfully created"]
+            if logged_in?
+                render :employees
+            else
+                redirect_to home_path
+            end
         else
-            render :new
+            flash[:error] = @user.get_errors
+            if logged_in?
+                render :employees
+            else
+                render :new 
+            end
         end
     end 
 
@@ -38,22 +48,49 @@ class UsersController < ApplicationController
     end
 
     def update
+        errors = []
+        @id = params[:id]
+        @user = edit_user(@id)
         if !user_params[:username].empty?
-			edit_user(params[:id]).update!(username:user_params[:username])
+			@user.update(username:user_params[:username])
         end
         if !user_params[:password].empty?
-            edit_user(params[:id]).update!(password:user_params[:password])
+            if user_params[:password_confirmation].empty? 
+                errors << "Password Confirmation cannot be blank"
+            elsif user_params[:password] != user_params[:password_confirmation]
+                errors << "Password and Confirmation do not match"
+            else
+                @user.update(password:password)
+            end
         end
         if !user_params[:email].empty?
-            edit_user(params[:id]).update!(email:user_params[:email])
+            @user.update(email:user_params[:email])
         end
         if !user_params[:employee_type].empty?
-            edit_user(params[:id]).update!(employee_type:user_params[:employee_type])
+            @user.update(employee_type:user_params[:employee_type])
         end
-        redirect_to home_path
+        flash[:error] = @user.get_errors
+        flash[:error] << errors
+        if flash[:error].flatten!.any?
+            flash[:error]
+            render :edit
+        else
+            flash[:notice] = ["User updated sucessfully"]
+            redirect_to home_path
+        end
     end
 
     def destroy
+        @id = params[:id]
+        @user = edit_user(@id)
+        if @user == current_user || current_user.employee_type == "manager"
+            @user.destroy
+            if current_user.employee_type != "manager"
+                session.delete :user_id
+            end
+        end
+        flash[:error]
+        render :employees
     end
 
     private
