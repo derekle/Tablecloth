@@ -11,13 +11,13 @@ class ApplicationController < ActionController::Base
 
     def require_login
         unless logged_in?
-          flash[:error] = "You must be logged in to access this section"
-          redirect_to root_path
+          flash[:error] = ["You must be logged in to access this section"]
+          redirect_to login_path
         end
     end
     def require_admin
         unless current_user.employee_type == "manager"
-          flash[:error] = "You must be a manager to view this section"
+            flash[:error] = ["You must be a manager to access this section"]
           redirect_to home_path
         end
     end
