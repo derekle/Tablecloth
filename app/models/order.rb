@@ -25,16 +25,20 @@ class Order < ApplicationRecord
     end
 
     def pay(quantity)
-        total = self.total -= quantity
-        if self.total <= 0
+        amountdue = self.total -= quantity
+        if amountdue <= 0
             self.ispaid = true
+            self.save!
+            amountdue = 0
         end
-        self.save!
-        return total
+        return amountdue
     end
 
     def change(quantity)
         change = self.total - quantity
+        if change > 0
+            change = 0
+        end
         return change
     end
 
