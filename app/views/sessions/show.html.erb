@@ -1,11 +1,5 @@
+
+
 <% if current_user %>
         <h3>Welcome, <%= current_user.username %>!</h3>
-        <h4><%= link_to 'Account', user_path(current_user.id)%></h4>
-        <%if current_user.employee_type == "manager" %>
-        <h4><%= link_to 'Employees', employees_path%></h4>
-        <% end %>
-        <h4><%= link_to 'Tables', {controller: "tables", action: "index"}%></h4>
-        <%if current_user.employee_type == "manager" %>
-        <h4><%= link_to 'Menu Items', {controller: "menuitems", action: "index"}%></h4>
-        <%end%>
 <% end %>
