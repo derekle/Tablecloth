@@ -8,6 +8,9 @@ class SessionsController < ApplicationController
   before_action :require_login
   skip_before_action :require_login, only: [:index, :new, :create]
   def new
+    if logged_in?
+      redirect_to home_path
+    end
   end
 
   def create
@@ -18,10 +21,19 @@ class SessionsController < ApplicationController
       user.save
       
       session[:user_id] = user.id
+      flash[:notice] = ["Login Successful"]
+      redirect_to home_path
     else
-      session[:user_id] = User.find_by(username: params[:username], email: params[:email]).id
+      @user = User.find_by(username: params[:username], email: params[:email])
+      if @user != nil
+        session[:user_id] = User.find_by(username: params[:username], email: params[:email]).id
+        flash[:notice] = ["Login Successful"]
+        redirect_to home_path
+      else
+        flash[:error] = ["Login Failed"]
+        render :new
+      end
     end
-    redirect_to :controller => 'sessions', :action => 'show'
   end
 
   def show
@@ -30,7 +42,7 @@ class SessionsController < ApplicationController
   #logging out by destroying session
   def destroy
     session.delete :user_id
-    redirect_to :controller => 'users', :action => 'index'
+    redirect_to home_path
   end 
 
   private
