@@ -1,5 +1,0 @@
-<h1>menuitems#index</h1>
-<%=button_to 'Add Menu Item', {controller: 'menuitems', action: "new"}, method: "get"%>
-<%Menuitem.all.each do |x|%>
-    <p><%= link_to 'Delete', {controller: "menuitems", action: "destroy", id: x.id}, method: "delete"%>/<%=link_to 'Edit', {controller: "menuitems", action: "edit", id:x.id}%> <%=x.name%> <%=x.price%></p>
-<%end%>

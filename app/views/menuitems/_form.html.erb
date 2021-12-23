@@ -1,6 +1,0 @@
-<%=form_for @menuitem do |f|%>
-    <p>Name: <%=f.text_field :name%></p>
-    <p>Price: <%=f.number_field :price, min: 0.00, step: 0.01%></p>
-    <p>Type: <%=f.select :item_type, [["Drink", "Drink"], ["Food", "Food"]]%></p>
-    <%=f.submit%>
-<%end%>
