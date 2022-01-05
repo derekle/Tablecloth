@@ -1,0 +1,22 @@
+.dashboard{
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.main{
+	display: flex;
+	flex-direction: row;
+	height: 100%
+}
+
+.dashbutton-container{
+	display: flex;
+	flex-direction: row;
+	width:100%;
+}
+.dashbutton {
+	height: 10%;
+	flex-grow:1;
+	padding: 10px;
+}
