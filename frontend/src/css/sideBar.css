@@ -1,0 +1,23 @@
+.sidebar-visible-false {
+	width: 0px;
+	background-color: rgb(15, 15, 15);
+	opacity: 0%;
+    height: 100%;
+	overflow-x: hidden;
+	transition: 0.5s;
+    color: white;
+}
+
+.sidebar-visible-true {
+	width: 250px;
+	background-color: rgb(15, 15, 15);
+	opacity: 100%;
+    color: white;
+    height: 100%;
+	overflow-x: hidden;
+	transition: 0.5s;
+}
+
+.sidebar  {
+    list-style: none;
+}
