@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  store: one
+  category: one
+  price: 1.5
+  active: false
+
+two:
+  name: MyString
+  store: two
+  category: two
+  price: 1.5
+  active: false
