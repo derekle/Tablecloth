@@ -1,12 +1,18 @@
 import '../css/dashboard.css'
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux'
 
-import Dashbutton from '../components/dashButton';
 import Sidebar from '../components/sidebar/sideBar';
+import List from '../components/sidebar/list';
+import { fetchProduct } from '../actions/fetchProduct';
 const Dashboard = () => {
 	const [visible, setVisible] = useState(true)
+	const dispatch = useDispatch()
 
+	useEffect(() => {
+		dispatch(fetchProduct(null, 'GET'))
+	}, []);
 
 	return (
 		<div className='dashboard'>
@@ -21,11 +27,7 @@ const Dashboard = () => {
 			</div>
 			<div className='main'>
 				<Sidebar visible={visible} />
-				<div className='dashbutton-container'>
-					<Dashbutton className='dashbutton' label='items' />
-					<Dashbutton className='dashbutton' label='users' />
-					<Dashbutton className='dashbutton' label='tables' />
-				</div>
+				<List />
 			</div>
 		</div>
 	);
