@@ -1,53 +1,33 @@
 // import '../css/dashboard.css'
 import React, { useState, useEffect, useContext } from 'react'
-import { useParams } from 'react-router-dom'
-import Dashbutton from '../components/dashButton';
 import Sidebar from '../components/sidebar/sideBar';
-import List from '../components/sidebar/list';
 import CreateForm from '../components/createForm';
-import ActionCableContext from '../config/providers';
 import CableApp from '../config/providers';
-import { product } from '../reducers/productReducer';
-import { useSelector } from 'react-redux';
-const Products = () => {
+import { useDispatch } from 'react-redux';
+const Products = (props) => {
 	const [visible, setVisible] = useState(true)
 	const [showCreateForm, setShowCreateForm] = useState(false)
-	const cproducts = useSelector((state) => state.product.products)
-	console.log(cproducts)
-	const [products, setProducts] = useState(cproducts)
-
-	const settings = { store: {}, products: [] }
-
 	const [channel, setChannel] = useState(null)
-	const { id } = useParams()
+	const dispatch = useDispatch()
+
 	useEffect(() => {
-		const store = CableApp.cable.subscriptions.create(
+		const channel = CableApp.cable.subscriptions.create(
 			{
 				channel: 'ProductsChannel',
-				store: 1,
+				store: props.store_id,
 			},
 			{
-				received: (updatedStore) => {
-					setProducts(updatedStore.products)
-					console.log(updatedStore.products)
-					console.log(products)
-
-
+				received: (data) => {
+					console.log(data)
+					dispatch({ type: 'get-product', data: data.products })
 				},
 			}
 		)
-
 		setChannel(channel)
-
 		return () => {
 			channel.unsubscribe()
 		}
-	}, [id])
-
-	const sendMessage = (content) => {
-		channel.send(content)
-	}
-	console.log(products)
+	}, [])
 	return (
 		<div className='dashboard'>
 			<div className='topnav'>
@@ -69,7 +49,7 @@ const Products = () => {
 				<CreateForm visible={showCreateForm} />
 			</div>
 			<div>
-				{products.map(product => {
+				{props.products.map(product => {
 					return <div>{product.name}</div>
 				})}
 			</div>
