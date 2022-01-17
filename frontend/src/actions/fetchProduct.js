@@ -36,7 +36,7 @@ export const fetchProduct = (params, method) => {
                 .then(data => {
                     console.log(data)
                     dispatch({
-                        type: 'add-product',
+                        type: 'get-product',
                         data: data,
                     });
                 })
