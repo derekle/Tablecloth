@@ -1,14 +1,17 @@
 const INIT_STATE = { products: [] };
-export const product = (state = INIT_STATE, action) => {
+export const products = (state = INIT_STATE, action) => {
     switch (action.type) {
-        case 'add-product':
-            console.log(action.data);
+        case 'get-product':
             return {
                 ...state,
-                products: action.data
+                products: [...state.products, ...action.data]
             }
-
+        case 'add-product':
+            return {
+                ...state,
+                products: [...state.products, action.data]
+            }
         default:
-            return INIT_STATE;
+            return state;
     }
 };
